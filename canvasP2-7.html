@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>requestAnimationFrame</title>
+</head>
+<body>
+    <!--<video controls="controls">
+        <source src="file.mp4" type="video/mp4" />
+        <source src="file.webm" type="video/webm" />
+        <source src="file.ogv" type="video/ogg" />
+    </video>-->
+    <video id="v" controls loop src="images/road.mp4"></video><!--视频标签可以被赋予任何尺寸，所以编码尺寸不是最优的-->
+    <canvas id="c"></canvas>
+
+    <script>
+        var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var v = document.querySelector('#v');
+            var canvas = document.querySelector("#c");
+            var ctx = canvas.getContext('2d');
+            v.addEventListener('loadedmetadata', function () {//loadmetadata事件可以订阅，并设置宽高
+                canvas.width = this.videoWidth;
+                canvas.height = this.videoHeight;
+            });
+            var draw = function () {
+                canvas.getContext('2d').drawImage(v, 0, 0);//该函数只执行一次，所以只显示一帧
+                //setInterval和setTimeout方法，无论什么时候都会执行，
+                //requestAnimationFrame仅仅发送请求当最后一帧已经完成绘制或者窗口正在被主动查看
+                requestAnimationFrame(draw);//该方法确保canvas会被更新
+            }
+            v.addEventListener('play', function () {//play事件，告诉用户已经开始播放视频
+                if (v.paused || v.ended) return;//如果视频没有暂停或者结束，则会执行draw函数
+                draw();//该函数告诉用户去canvas里去画这张图
+            });
+        });
+        
+    </script>
+</body>
+</html>

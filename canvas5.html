@@ -5,6 +5,23 @@
     <title></title>
 </head>
 <body>
-    <canvas></canvas>
+    <canvas id="c" width="250" height="200"></canvas>
+
+    <script>
+        var c = document.querySelector("#c");
+        var ctx = c.getContext("2d");
+
+        var image = new Image();
+
+        image.onload = function( ) {
+            console.log("loaded images"); //图片加载完成后提示
+            ctx.drawImage(image, 0, 0, c.width, c.height); //调用drawImage
+
+            var savedImage = c.toDataURL(); //toDataURL创建了一个可以表现这个图片的字符串，可输出任何格式的图片
+            window.open(savedImage);
+        }
+
+        image.src="images/win.png";//图片加载过程是异步的，因此要先加载完才能进行后续操作
+    </script>
 </body>
 </html>

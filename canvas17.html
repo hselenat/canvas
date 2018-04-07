@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>绘制文本</title>
+</head>
+<body>
+    <canvas id="c" width="500" height="500"></canvas>
+
+    <script>
+        var c = document.querySelector("#c");
+        var ctx = c.getContext("2d");
+
+        ctx.font = "36pt Impact";
+        ctx.textAlgin = "left";
+        ctx.fillStyle = "#FFF";
+        ctx.fillText('CANVAS MEMES', c.width/2, 40);//(50,10)表示这串文字的左下角所在的位置，因此坐标不能设置为（0,0）它将不显示
+
+        ctx.strokeStyle = "#000";//因为调用的是描边，所以绿色显示
+        ctx.lineWidth = 3;
+        ctx.strokeText('CANVAS MEMES', c.width / 2, 40);
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>画布2D图片数据</title>
+</head>
+<body>
+    <canvas width="250" height="200"></canvas>
+
+    <script>
+        var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
+        
+        var data = ctx.getImageData(0, 0, 400, 400);//像素数据,存贮在每个像素间没有任何分割的一个大列表里；
+        //画布支持的图片使用js表示成一个ImageData对象
+        //包含源图像的width'宽度值和height高度值（以像素为单位），以及包含每个像素的红色，绿色和蓝色和alpha值的数据数组
+        //data属性通常代表一个 U int 8 clamped数组
+        //U 代表数组是无符号的或者是仅包含正值
+        //int 8 表示他将存储8-bit数字（无符号从0-255）
+        //可以通过检索或者修改图片数据来调用createImageData，getImageData，putImageData函数
+        //createImageData初始化一个可以修改的空的图像数据对象
+        //getImageData和putImageData可以检索或者存储数据在一个背景画布
+        function paintGreen(imageData) {
+            var numPixels = imageData.data.length / 4;//如果我们知道每个像素中有多少分量，我们可以使用该数据来计算存储在数组中的像素数。
+            for (var i = 0; i <= numPixels; i++) {
+                if (i % 10 === 0) {
+                    imageData.data[i * 4 + 1] = 255;//有了像素数之后，我们可以改变相应的像素分量
+                    imageData.data[i * 4 + 3] = 255;//除了设置颜色，还要设置alpha通道为一个非零的值
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

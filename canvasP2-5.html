@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>灰度测试</title>
+</head>
+<body>
+    <canvas width="250" height="200"></canvas>
+
+    <script>
+        var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
+        
+        var image = new Image();
+        image.onload = function () {
+            ctx.drawImage(image, 0, 0);
+        }
+        image.src = "images/win.png";
+
+        var makePixelGrayScale = function (r, g, b, a) {
+            var y = (0.3 * r) + (0.59 * g) + (0.11 * b);//取红色30%，绿色59%，蓝色11%，使图片变成灰度
+            return { r: y, g: y, b: y, a: y };
+        }
+        function makePixelGrayScale(){
+            var r, g, b, a;
+            var imageData = ctx.getImageData(0, 0, 250, 200);
+            var numPixels = ImageData.data.length / 4;
+            for (var i = 0;  i < numPixels;  i++) {
+                r = ImageData.data[i * 4 + 0];//imageData对象检索数据
+                g = ImageData.data[i * 4 + 1];//imageData对象检索数据
+                b = ImageData.data[i * 4 + 2];//imageData对象检索数据
+                a = ImageData.data[i * 4 + 3];//imageData对象检索数据
+                Pixel = makePixelGrayScale(r, g, b, a);//调用makePixelGrayScale方法存储信息，返回给imageData
+                ImageData.data[i * 4 + 0] = pixel.r;
+                ImageData.data[i * 4 + 1] = pixel.g;
+                ImageData.data[i * 4 + 2] = pixel.b;
+                ImageData.data[i * 4 + 3] = pixel.a;
+            }
+            ctx.putImageData(ImageData,0,0);
+        }
+    </script>
+</body>
+</html>
